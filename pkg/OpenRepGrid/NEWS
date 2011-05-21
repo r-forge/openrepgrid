@@ -1,0 +1,108 @@
+OpenRepGrid 0.1.2 (2011-05-17) ----------------------------------------
+* polishing of console output for several functions:
+** constructCor
+** elementCor
+** statsConstructs
+** statsElements
+** distance
+** alignByLoadings
+
+
+OpenRepGrid 0.1.1 (2011-05-15) ----------------------------------------
+
+New Features
+* indexConflict1: unbalanced triads (Slade & Sheehan)
+* indexConflict2: unbalanced triads (Bassler et al.)
+* indexConflict3: triangle inequalities
+* indexDilemma: detect implicative dilemmas
+* data leach2001a and leach2001b
+
+Internal changes
+* getConstructNames2
+* getElementNames2
+* formatMatrix
+
+OpenRepGrid 0.1.0 (2011-05-08) ----------------------------------------
+
+New Features
+* Slater distance
+* Hartmann distance
+
+OpenRepGrid 0.0.9 (2011-05-05) ----------------------------------------
+
+New Features
+* zoom argument in biplots
+* variance explained options in biplots
+* color controls in biplots for points and labels
+* no overplotting with high zoom values
+* PVAFF index
+* frames for biplot3d
+* intensity index
+
+OpenRepGrid 0.0.8 (2011-05-03) ----------------------------------------
+
+New Features
+* construct lines in drawBiplot2d
+* saveAsTxt
+* new examples added
+
+OpenRepGrid 0.0.7 (2011-04-28) ----------------------------------------
+
+New Features
+* updated documentation files
+* changes in addVarianceExplainedToBiplot2d
+* alignByIdeal
+
+OpenRepGrid 0.0.6 (2011-04-27) ----------------------------------------
+
+New Features
+* biplot3d (new version)
+* biplotEsa2d
+* biplotEsa3d
+* biplotSlater2d
+* biplotSlater3d
+* home
+
+OpenRepGrid 0.0.5 (2011-04-20) ----------------------------------------
+
+New Features
+* center
+* normalize
+
+OpenRepGrid 0.0.4 (2011-03-03) ----------------------------------------
+
+New Features
+* not documented
+
+OpenRepGrid 0.0.3 (2011-03-03) ----------------------------------------
+
+New Features
+* distance
+* importGridsuite
+* importScivesco
+* importGridstat
+* importGridcor
+* importTxt
+* constructSomers i.e. Somers' d
+* getRatingLayers (internal function)
+* cluster (for constructs)
+* data feixas2004
+* data fbb2003
+* constructRmsCor
+* constructPca
+
+OpenRepGrid 0.0.2 (2010-01-06) ----------------------------------------
+
+New Features
+* not documented
+
+OpenRepGrid 0.0.1 (2010-12-03) ----------------------------------------
+
+Features
+
+* several functions
+
+Bug fixes
+
+* NONE as first version
+
