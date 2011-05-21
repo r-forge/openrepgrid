@@ -23,15 +23,18 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <body>
 
-<!-- R-Forge Logo -->
+You are being referred to the OpenRepGrid wiki.
+If it takes longer than 10 seconds, click <a href="http://www.openrepgrid.uni-bremen.de/wiki">here</a>.
+
+<!-- R-Forge Logo 
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 <tr><td>
 <a href="http://r-forge.r-project.org/"><img src="http://<?php echo $themeroot; ?>/images/logo.png" border="0" alt="R-Forge Logo" /> </a> </td> </tr>
 </table>
-
+-->
 
 <!-- get project title  -->
-<!-- own website starts here, the following may be changed as you like -->
+<!-- own website starts here, the following may be changed as you like 
 
 <?php if ($handle=fopen('http://'.$domain.'/export/projtitl.php?group_name='.$group_name,'r')){
 $contents = '';
@@ -40,16 +43,16 @@ while (!feof($handle)) {
 }
 fclose($handle);
 echo $contents; } ?>
-
+-->
 <!-- end of project description -->
 
-<!-- Try to tranfer to wiki -->
+<!-- Try to tranfer to wiki 
 <meta http-equiv="refresh" content="0; URL=http://www.openrepgrid.uni-bremen.de/wiki">  
 
 <p> For further information on OpenRepGrid visit the projects home, the OpenRepGrid 
 wiki under www.openrepgrid.org. </p>
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
-
+-->
 </body>
 </html>
