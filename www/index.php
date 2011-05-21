@@ -43,7 +43,11 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> No content added. </p>
+<!-- Try to tranfer to wiki -->
+<meta http-equiv="refresh" content="0; URL=http://www.openrepgrid.uni-bremen.de/wiki">  
+
+<p> For further information on OpenRepGrid visit the projects home, the OpenRepGrid 
+wiki under www.openrepgrid.org. </p>
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
