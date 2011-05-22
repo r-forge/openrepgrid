@@ -46,9 +46,10 @@ echo $contents; } ?>
 -->
 <!-- end of project description -->
 
-<!-- Try to tranfer to wiki 
+<!-- Try to tranfer to wiki -->
 <meta http-equiv="refresh" content="0; URL=http://www.openrepgrid.uni-bremen.de/wiki">  
 
+<!-- old 
 <p> For further information on OpenRepGrid visit the projects home, the OpenRepGrid 
 wiki under www.openrepgrid.org. </p>
 
