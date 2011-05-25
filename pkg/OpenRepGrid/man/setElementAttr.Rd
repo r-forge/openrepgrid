@@ -8,7 +8,8 @@
 \value{\code{repgrid} object}
 \note{Currently the main purpose is to change element names. 
 Future implementations will allow to set further attributes.}
-\author{Mark heckmann}
+\author{Mark Heckmann}
+\seealso{\code{\link{setConstructAttr}}}
 \arguments{\item{x}{\code{repgrid} object.}
 \item{pos}{Column number of element in the grid whose attributes 
 are changed.}

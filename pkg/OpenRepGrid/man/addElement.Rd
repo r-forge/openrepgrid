@@ -8,6 +8,7 @@
 \details{Add an element to an existing grid.}
 \value{\code{repgrid} object}
 \author{Mark Heckmann}
+\seealso{\code{\link{addConstruct}}}
 \arguments{\item{x}{\code{repgrid} object.}
 \item{name}{Name of the new element (character string).}
 \item{scores}{Numerical ratings for the new element column
@@ -22,5 +23,6 @@ TODO: Does not work properly yet.}
 
 bell2010      
 addElement(bell2010, "new element", c(1,2,5,4,3,6,5,2,7))
+
 }}
 

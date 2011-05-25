@@ -102,7 +102,7 @@ indexVariability <- function(x, min, max, digits=2){
 #' In this case the construct system is regarded as 'simple' (Bell, 2003).
 #'
 #' The percentage of variance is calculated using the corelation matrix
-#' of te constructs submitted to \code{\link{princomp}}.
+#' of te constructs submitted to \code{\link{svd}}.
 #' TODO: Results have not yet been checked against other grid programs.
 #'
 #' @param x         \code{repgrid} object.
@@ -124,8 +124,8 @@ indexVariability <- function(x, min, max, digits=2){
 #'                  \emph{Progress in experimental personality research}
 #'                  (Vol. 2). New York: Academic Press.
 #'
-#'                  James, R. E. (1954). Identification in terms of personal 
-#'                  constructs (Unpublished doctoral thesis). Ohio State 
+#'                  James, R. E. (1954). \emph{Identification in terms of personal 
+#'                  constructs} (Unpublished doctoral thesis). Ohio State 
 #'                  University, Columbus, OH.  
 #'
 #' @examples \dontrun{
@@ -142,8 +142,8 @@ indexVariability <- function(x, min, max, digits=2){
 indexPvaff <- function(x, output=1, digits=2){
 	if (!inherits(x, "repgrid")) 
 		stop("Object must be of class 'repgrid'")
-  r <- constructCor(x, out=0)
-  sv <- princomp(r)$sdev
+  cr <- constructCor(x, out=0)
+  sv <- svd(cr)$d 
   pvaff <- sv[1]^2/sum(sv^2)
   if (output == 1){
     cat("\n########################################################")
@@ -161,13 +161,26 @@ indexPvaff <- function(x, output=1, digits=2){
 indexPvaff2 <- function(x){
 	if (!inherits(x, "repgrid")) 
 		stop("Object must be of class 'repgrid'")
-  cr <- constructCor(x, out=0)
-  sv <- svd(cr)$d 
-  sv[1]^2/sum(sv^2)
+	r <- constructCor(x, out=0)
+  sv <- princomp(r)$sdev
+  pvaff <- sv[1]^2/sum(sv^2)
 }
 
 
-#' The intensity index is a measure .
+#' The Intensity index has been suggested by Bannister (1960) as a 
+#' measure of the amount of construct linkage. Bannister suggested 
+#' that the score reflects the degree of organization of the construct 
+#' system under investigation (Bannister & Mair, 1968). The index 
+#' resulted from his and his colleagues work on construction systems 
+#' of patient suffering schizophrenic thought disorder. The concept of 
+#' intensity has a theoretical connection to the notion of "tight" and 
+#' "loose" construing as proposed by Kelly (1991). While tight constructs 
+#' lead to unvarying prediction, loose constructs allow for varying 
+#' predictions. Bannister hypothesized that schizophrenic thought disorder 
+#' is liked to a process of extremely loose construing leading to a loss 
+#' of predictive power of the subject's construct system. The Intensity 
+#' score as a structural measure is thought to reflect this type of 
+#' system disintegration (Bannister, 1960). 
 #' 
 #' Implementation as in the Gridcor programme and explained on the 
 #' correspoding help pages: 
@@ -180,9 +193,9 @@ indexPvaff2 <- function(x){
 #' Currently the total is calculated as the unweighted average of all 
 #' single scores (for elements and construct).
 #'
-#' @title Test to overwrite title
+#' @title         Intensity index 
 #'
-#' @note  TODO: Results have not been tested against other programs' results.
+#' @note          TODO: Results have not been tested against other programs' results.
 #'
 #' @param x       \code{repgrid} object.
 #' @param rc      Whether to use Cohen's rc for the calculation of
@@ -250,9 +263,10 @@ indexIntensity <- function(x, rc=FALSE, output=TRUE, trim=30, digits=2){
 	            total.int=total.int)
 	            
 	if (output){
-	  cat("\nIntensity scores\n")
-	  cat("#################\n")
-	  cat("\nTotal intensity:", round(total.int, digits), "\n")
+	  cat("\n################")
+	  cat("\nIntensity index")
+	  cat("\n################")
+	  cat("\n\nTotal intensity:", round(total.int, digits), "\n")
 	  
 	  cat("\n\nAverage intensity of constructs:", round(c.int.mean, digits), "\n")
 	  cat("\nItensity by construct:\n")
@@ -362,7 +376,7 @@ distanceSlater <- function(x, trim=10, indexcol=FALSE, digits=2, output=1,
                            upper=TRUE){
   if (!inherits(x, "repgrid")) 
 		stop("Object must be of class 'repgrid'")
-	E <- distance(x, along=2, digits = 10)
+	E <- distance(x, along=2, digits = 10, out=0)
 	m <- getNoOfElements(x)
 	D <- center(x)              # row centering of grid data
 	S <- sum(diag(t(D) %*% D))  
@@ -593,8 +607,9 @@ distanceHartmann <- function(x, rep=100, meantype=1, quant=c(.05, .5, .95),
   
   # type of output to return (matrix or list)
   slaterOut <- function(...){
-    cat("\nSlater distances\n")
-    cat("################\n\n")
+    cat("\n#################")
+    cat("\nSlater distances")
+    cat("\n#################\n\n")
     print(D.show)
     cat("\nThe 'Slater distance' sample distribution has the following quantiles:\n")
     print(round(qs.sl, digits))
@@ -603,8 +618,9 @@ distanceHartmann <- function(x, rep=100, meantype=1, quant=c(.05, .5, .95),
   }
   
   hartmannOut <- function(...){
-    cat("\nHartmann distances\n")
-    cat("##################\n\n")
+    cat("\n###################")  
+    cat("\nHartmann distances")
+    cat("\n###################\n\n")
     print(H.show)
     cat("\nThe 'Hartmann distance' sample distribution has the following quantiles:\n")
     print(round(qs.h, digits))
@@ -622,8 +638,8 @@ distanceHartmann <- function(x, rep=100, meantype=1, quant=c(.05, .5, .95),
   } 
   
   # output list
-  res <- list(hartmann=H, h.quantiles=round(qs.h, digits), 
-              h.vals=h.vals, h.sd=sd.h,
+  res <- list(hartmann=round(H, digits), h.quantiles=round(qs.h, digits), 
+              h.vals=round(h.vals, digits), h.sd=sd.h,
               slater=round(D, digits), sl.quantiles=round(qs.sl, digits), 
               sl.vals=round(sl.vals, digits), sl.sd=sd.c)
   invisible(res)  
@@ -635,9 +651,9 @@ distanceHartmann <- function(x, rep=100, meantype=1, quant=c(.05, .5, .95),
 ###############################################################################
 
 indexConflict1Out1 <- function(res){
-  cat("\n###############################")
+  cat("\n################################")
   cat("\nConflicts based on correlations")
-  cat("\n###############################") 
+  cat("\n################################") 
   cat("\n\nAs devised by Slade & Sheehan (1979)")
   
   cat("\n\nTotal number of triads:", res[[1]])

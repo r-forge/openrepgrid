@@ -31,7 +31,8 @@ with long names.}
 \item{cutoff}{Loadings smaller than cutoff are not printed.}
 \item{output}{The type of output printed to the console. \code{output=0}
 will supress printing of the output. \code{output=1} (default) will print
-results to the screen.}
+results to the screen. \code{output==2} will invisibly retrn the whole 
+object from \code{principal} not only the loadings.}
 }
 \examples{\dontrun{
 

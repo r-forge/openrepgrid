@@ -132,3 +132,93 @@ quasiDistributionDistanceSlater <- function(rep, nc, ne, range, progress=TRUE){
                       })
   unlist(quasis.sd)         # return as vector
 }
+
+
+#' Generate a list with all possible construct reflections of a grid.
+#' 
+#' @param x           \code{repgrid} object.
+#' @param progress    Whether to show a progress bar (default is \code{TRUE}).
+#'                    This may be sensible for a larger number of elements.
+#' @return            A list of \code{repgrid} objects with all possible permutations
+#'                    of the grid.
+#'
+#' @author            Mark Heckmann
+#' @export
+#' @examples \dontrun{
+#' 
+#'   l <- permuteConstructs(mackay1992)
+#'   l
+#'
+#' }
+#'
+permuteConstructs <- function(x, progress=TRUE){
+  reflections <- rep(list(0:1), getNoOfConstructs(x)) 
+  perm <- expand.grid(reflections)  		             # all permutations 
+  if (progress)
+    apply_used <- apply_pb else
+    apply_used <- apply
+  permGridList <- apply_used(perm, 1, function(perm, x){  # make grids with all possible reflections
+    perm <- as.logical(perm)
+    ncons <- seq_len(getNoOfConstructs(x))
+    swapPoles(x, ncons[perm])
+  }, x)
+  permGridList 
+}
+
+
+#' Generate one or many permutations of the grid by shuffling
+#' the rows, the columns or the whole grid matrix.
+#'
+#' @title         Permute rows, columns or whole grid matrix.
+#' @param x       \code{repgrid} object.
+#' @param along   What to permute. \code{along=1} (default) will permute the rows
+#'                \code{along=2} the columns, \code{along=3} the whole matrix.
+#' @param n       The number of permutations to produce.
+#' @return        A \code{repgrid} object if \code{n=1} or a list of 
+#'                \code{repgrid} objects if \code{n>1}.
+#'
+#' @author        Mark Heckmann
+#' @export      
+#' @keywords       internal
+#'
+#' @examples \dontrun{
+#'  
+#'    # permute grid
+#'    permuteGrid(bell2010)
+#'    permuteGrid(bell2010)
+#'    permuteGrid(bell2010)
+#'
+#'    # generate a list of permuted grids
+#'     permuteGrid(bell2010, n=5)
+#'
+#' }
+#'
+permuteGrid <- function(x, along=1, n=1){
+  if (!inherits(x, "repgrid")) 
+		stop("Object must be of class 'repgrid'")
+		
+  permuteGridInternal <- function(x, along=1){
+    sc <- getRatingLayer(x)
+    if (along == 1)
+      res <- t(apply(sc, 1, sample))
+    if (along == 2)
+      res <- apply(sc, 2, sample)
+    if (along == 0)
+     res <- sample(sc)
+    x[,] <- res
+    x
+  }
+  # generate n permuted grids
+  res <- replicate(n,  permuteGridInternal(x=x, along=along))
+  # return repgrid object no list if n=1
+  if (n == 1)
+    res <- res[[1]]
+  res
+}
+
+
+
+### TODO ###
+# Permutation test
+
+# Slater writes: 

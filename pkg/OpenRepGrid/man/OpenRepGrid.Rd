@@ -15,7 +15,7 @@ Everyone who is interested in developing the package is invited to join.
 The \pkg{OpenRepGrid} package is developed at R-Forge (\url{http://openrepgrid.r-forge.r-project.org}).
 The R-Forge site provides information and mailing lists for help queries and bug reports. 
 Bug reports can also be emailed to the package maintainer or issued under 
-\url{www.openrepgrid.org}. The maintainer at R-Forge is Mark Heckmann 
+\url{http://www.openrepgrid.org}. The maintainer at R-Forge is Mark Heckmann 
 <heckmann(at)uni-bremen.de>.}
 \note{To get started with \pkg{OpenRepGrid} visit the project's home under \url{www.openrepgrid.org}. 
 On this site you will find tutorials, explanation about the theory, methods of analysis and 

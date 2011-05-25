@@ -1,11 +1,16 @@
-OpenRepGrid 0.1.2 (2011-05-17) ----------------------------------------
+OpenRepGrid 0.1.3 (2011-05-23) ----------------------------------------
+* permuteConstructs (dev)
+* update openrepgrid-internal
+
+OpenRepGrid 0.1.2 (2011-05-21) ----------------------------------------
 * polishing of console output for several functions:
-** constructCor
-** elementCor
-** statsConstructs
-** statsElements
-** distance
-** alignByLoadings
+* constructCor
+* elementCor
+* statsConstructs
+* statsElements
+* distance
+* alignByLoadings
+* some others might have been changed (undocumented)
 
 
 OpenRepGrid 0.1.1 (2011-05-15) ----------------------------------------

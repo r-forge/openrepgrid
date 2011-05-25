@@ -8,6 +8,7 @@
 it does is create an additional progress bar.}
 \value{see ?apply}
 \seealso{\code{\link{apply}}}
+\author{Mark Heckmann}
 \keyword{internal}
 \arguments{\item{X}{see ?apply for parameter explanation}
 \item{MARGIN}{see ?apply}
@@ -15,6 +16,7 @@ it does is create an additional progress bar.}
 \item{...}{see ?apply}
 }
 \examples{\dontrun{
+
 apply_pb(anscombe, 2, sd, na.rm=TRUE)
 
 # larger dataset
@@ -25,5 +27,6 @@ head(apply_pb(df, 1, sd))
 df <- data.frame(rnorm(90000), rnorm(90000))
 system.time(apply(df, 1, sd))
 system.time(apply_pb(df, 1, sd))
+
 }}
 

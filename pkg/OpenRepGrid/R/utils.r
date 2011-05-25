@@ -332,15 +332,17 @@ insertAt <- function(index.base, index.insert, side="pre"){
 #' Can be used like standard base:::apply. The only thing 
 #' it does is create an additional progress bar.
 #'
-#' @param X see ?apply for parameter explanation
-#' @param MARGIN see ?apply
-#' @param FUN see ?apply
-#' @param ... see ?apply
-#' @return see ?apply
-#' @seealso \code{\link{apply}}
+#' @param X         see ?apply for parameter explanation
+#' @param MARGIN    see ?apply
+#' @param FUN       see ?apply
+#' @param ...       see ?apply
+#' @return          see ?apply
+#' @seealso         \code{\link{apply}}
+#' @author          Mark Heckmann
 #' @export
-#' @keywords internal
+#' @keywords        internal
 #' @examples \dontrun{
+#'
 #'    apply_pb(anscombe, 2, sd, na.rm=TRUE)
 #'
 #'    # larger dataset
@@ -351,6 +353,7 @@ insertAt <- function(index.base, index.insert, side="pre"){
 #'    df <- data.frame(rnorm(90000), rnorm(90000))
 #'    system.time(apply(df, 1, sd))
 #'    system.time(apply_pb(df, 1, sd))
+#'
 #' }
 #'
 apply_pb <- function(X, MARGIN, FUN, ...)
@@ -385,16 +388,19 @@ apply_pb <- function(X, MARGIN, FUN, ...)
 #' Can be used like standard base:::lapply. The only thing 
 #' it does is create an additional progress bar.
 #'
-#' @param X see ?lapply for parameter explanation
-#' @param FUN see ?lapply 
-#' @param ... see ?lapply 
-#' @return list see ?lapply
-#' @seealso \code{\link{lapply}}
+#' @param X           see ?lapply for parameter explanation
+#' @param FUN         see ?lapply 
+#' @param ...         see ?lapply 
+#' @return list       see ?lapply
+#' @seealso           \code{\link{lapply}}
+#' @author            Mark Heckmann
 #' @export
-#' @keywords internal
+#' @keywords          internal
 #' @examples \dontrun{
+#'
 #'    l <- sapply(1:20000, function(x) list(rnorm(1000)))
 #'    lapply_pb(l, mean)
+#'
 #' }
 #'
 lapply_pb <- function(X, FUN, ...)
@@ -426,14 +432,16 @@ lapply_pb <- function(X, FUN, ...)
 #' Can be used like standard base:::sapply. The ionly thing 
 #' it does is create an additional progress bar.
 #'
-#' @param X see ?sapply for parameter explanation
-#' @param FUN see ?sapply 
-#' @param ... see ?sapply 
-#' @return list see ?sapply
-#' @seealso \code{\link{sapply}}
+#' @param X           see ?sapply for parameter explanation
+#' @param FUN         see ?sapply 
+#' @param ...         see ?sapply 
+#' @return list       see ?sapply
+#' @seealso           \code{\link{sapply}}
+#' @author            Mark Heckmann
 #' @export
-#' @keywords internal
+#' @keywords          internal
 #' @examples \dontrun{
+#'
 #'    l <- sapply(1:20000, function(x) list(rnorm(1000)))
 #'    head(sapply_pb(l, mean))
 #'
@@ -441,6 +449,7 @@ lapply_pb <- function(X, FUN, ...)
 #'    l <- sapply(1:20000, function(x) list(rnorm(1000)))
 #'    system.time(sapply(l, mean))
 #'    system.time(sapply_pb(l, mean))
+#'
 #' }
 sapply_pb <- function(X, FUN, ...)
 {
@@ -914,4 +923,35 @@ addIndexColumnToMatrix <- function(x){
 }
 
 
+#' Make a histogram with steps instead of bars. Densities are used
+#' for the heights.
+#'
+#' @title           Density histogram withs steps instead of bars
+#'
+#' @param vals      Numeric values to display.
+#' @param breaks    Passed on to \code{hist}. 
+#'                  See ?hist parameter \code{breaks} for more information.
+#' @param add       Whether to add the steps to an existing plot (\code{FALSE})
+#'                  or to create a new plot (default \code{add=TRUE}).  
+#' @author          Mark Heckmann
+#' @export
+#' @keywords        internal  
+#' @examples \dontrun{
+#'
+#'    x <- rnorm(1000) 
+#'    y <- rnorm(1000, sd=.6)  
+#'    stepChart(y, breaks=50)
+#'    stepChart(x, add=T, breaks=50, col="red")
+#' }
+#'
+stepChart <- function(vals, breaks="Sturges", add=FALSE, ...){
+  h <- hist(vals, breaks=breaks, plot=F)
+  x <- h$breaks
+  y <- h$density
+  x <- c(x, x[length(x)])
+  y <- c(0, y, 0)
+  if (add)
+    points(x, y, type="s", ...) else
+    plot(x, y, type="s", ...)
+}
 

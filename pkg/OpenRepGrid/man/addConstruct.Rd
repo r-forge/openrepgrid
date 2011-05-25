@@ -8,6 +8,7 @@
 \description{Add a new construct to an existing grid object.}
 \value{\code{repgrid} object.}
 \author{Mark Heckmann}
+\seealso{\code{\link{addElement}}}
 \arguments{\item{x}{\code{repgrid} object.}
 \item{l.name}{Name of the left pole (character string).}
 \item{r.name}{Name of the right pole (character string)}
@@ -26,5 +27,6 @@ TODO. Does not work properly.}
 # show grid
 bell2010                                          
 addConstruct(bell2010, "left pole", "pole right", c(3,1,3,2,5,4,6,3,7,1))
+
 }}
 

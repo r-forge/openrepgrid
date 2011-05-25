@@ -1,16 +1,17 @@
 \name{getScaleMidpoint}
 \alias{getScaleMidpoint}
-\title{get midpoint of scale...}
+\title{Get midpoint of the grid rating scale...}
 \usage{getScaleMidpoint(x)
 }
-\description{get midpoint of scale}
-\value{\code{numeric}. Midpoint of scale.}
+\description{Get midpoint of the grid rating scale}
+\value{Midpoint of scale.}
 \keyword{internal}
 \author{Mark Heckmann}
-\arguments{\item{x}{\code{repgrid} object}
+\arguments{\item{x}{\code{repgrid} object.}
 }
 \examples{\dontrun{
 
-getNoOfElements(bell2010)
+getScaleMidpoint(bell2010)
+
 }}
 

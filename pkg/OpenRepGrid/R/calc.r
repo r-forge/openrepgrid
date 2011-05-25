@@ -791,7 +791,8 @@ constructD <- function(x, dependent = "c",
 #' @param cutoff      Loadings smaller than cutoff are not printed.
 #' @param output      The type of output printed to the console. \code{output=0}
 #'                    will supress printing of the output. \code{output=1} (default) will print
-#'                    results to the screen.
+#'                    results to the screen. \code{output==2} will invisibly retrn the whole 
+#'                    object from \code{principal} not only the loadings.
 #' @return            Invisibly returns a matrix of loadings on the principal components.
 #'
 #' @author            Mark Heckmann
@@ -840,7 +841,10 @@ constructPca <- function(x, nfactors=3, rotate="varimax",
     print(loadings(pc), cutoff=cutoff, digits=digits)  
   }
   
-  invisible(round(loadings(pc)[,], digits))
+  # return loadings or whole principal object
+  if (output == 2)
+    invisible(pc) else
+    invisible(round(loadings(pc)[,], digits))       
 }
 
 

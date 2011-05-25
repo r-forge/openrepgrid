@@ -447,14 +447,16 @@ clearRatings <- function(x, rows=NA, cols=NA, layer=1){
 #' @param position        An integer at which column the element will be added.
 #'                        TODO: Does not work properly yet.
 #' @param side            Not yet in use.
-#' @return          \code{repgrid} object
+#' @return                \code{repgrid} object
 #' @export
-#' @author    Mark Heckmann
+#' @author                Mark Heckmann
+#' @seealso             \code{\link{addConstruct}}
 #'
 #' @examples \dontrun{
 #'
 #'    bell2010      
 #'    addElement(bell2010, "new element", c(1,2,5,4,3,6,5,2,7))
+#'
 #' }
 #'
 addElement <- function(x, name=NA, scores=NA, abbreviation=NA, status=NA, position=NA, side="pre"){
@@ -491,16 +493,18 @@ addElement <- function(x, name=NA, scores=NA, abbreviation=NA, status=NA, positi
 #' @param position        An integer at which row the construct will be added.
 #'                        TODO. Does not work properly.
 #' @param side            Not yet in use.
-#' @return \code{repgrid} object.
+#' @return                \code{repgrid} object.
 #'
 #' @export
-#' @author  Mark Heckmann
+#' @author                Mark Heckmann
+#' @seealso               \code{\link{addElement}}
 #'
 #' @examples \dontrun{
 #'
 #'    # show grid
 #'    bell2010                                          
 #'    addConstruct(bell2010, "left pole", "pole right", c(3,1,3,2,5,4,6,3,7,1))
+#'
 #' }
 #'
 addConstruct <- function(x, l.name=NA, r.name=NA, scores=NA, 
@@ -539,13 +543,14 @@ addConstruct <- function(x, l.name=NA, r.name=NA, scores=NA,
 #' @param name      New element name (optional).
 #' @param abb       Abbreviation of element name (optional).
 #' @param status    Status of element (e.g. ideal etc.) (optional).
-#' @return    \code{repgrid} object
+#' @return          \code{repgrid} object
 #'
-#' @note    Currently the main purpose is to change element names. 
-#'          Future implementations will allow to set further attributes.
+#' @note            Currently the main purpose is to change element names. 
+#'                  Future implementations will allow to set further attributes.
 #'
 #' @export
-#' @author Mark heckmann
+#' @author          Mark Heckmann
+#' @seealso         \code{\link{setConstructAttr}}
 #' @examples \dontrun{
 #'    
 #'    x <- setElementAttr(boeker, 1, "new name")   # change name of first element
@@ -586,7 +591,8 @@ setElementAttr <- function(x, pos, name, abb, status){
 #' @return                \code{repgrid} object
 #'
 #' @export
-#' @author Mark heckmann
+#' @author Mark Heckmann
+#' @seealso         \code{\link{setElementAttr}}
 #' @examples \dontrun{
 #'
 #'    x <- setConstructAttr(bell2010, 1, 
@@ -751,13 +757,13 @@ setScale <- function(x, min, max, step, ...){         # ... needes for makeRepgr
 #' Get minimum and maximum scale value used in grid. The values are 
 #' returned either as a vector or a list.
 #'
-#' @param x       \code{repgrid} object.
-#' @param output  Type of output object. 1= named vector, 2 = list.
-#' @return        Vector or list (depends on \code{output} containing 
-#'                minimum and maximum scale value.
-#' @keywords internal
+#' @param x         \code{repgrid} object.
+#' @param output    Type of output object. 1= named vector, 2 = list.
+#' @return          Vector or list (depends on \code{output} containing 
+#'                  minimum and maximum scale value.
+#' @keywords        internal
 #' @export
-#' @author  Mark Heckmann
+#' @author          Mark Heckmann
 #'
 getScale <- function(x, output=1){
   if (!inherits(x, "repgrid")) 							# check if x is repgrid object
@@ -1070,17 +1076,18 @@ getNoOfElements <- function(x){
 }
 
 
-#' get midpoint of scale
+#' Get midpoint of the grid rating scale
 #'
-#' @param x   \code{repgrid} object
-#' @return    \code{numeric}. Midpoint of scale.
+#' @param x     \code{repgrid} object.
+#' @return      Midpoint of scale.
 #'
 #' @export
-#' @keywords internal
-#' @author Mark Heckmann
+#' @keywords    internal
+#' @author      Mark Heckmann
 #' @examples \dontrun{
 #'
-#'      getNoOfElements(bell2010)
+#'      getScaleMidpoint(bell2010)
+#'
 #' }
 #'
 getScaleMidpoint <- function(x){

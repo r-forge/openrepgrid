@@ -7,7 +7,8 @@
 \description{Set the attributes of a construct}
 \details{Set the attributes of a construct i.e. name, abbreviation, status etc.}
 \value{\code{repgrid} object}
-\author{Mark heckmann}
+\author{Mark Heckmann}
+\seealso{\code{\link{setElementAttr}}}
 \arguments{\item{x}{\code{repgrid} object.}
 \item{pos}{Row number of construct in the grid to be changed}
 \item{l.name}{Name of the left pole (string) (optional).}

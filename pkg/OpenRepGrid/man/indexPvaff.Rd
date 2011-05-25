@@ -13,7 +13,7 @@ linear component. If a single latent component is able to explain the
 variation in the grid, the cognitive complexity is said to be low. 
 In this case the construct system is regarded as 'simple' (Bell, 2003).}
 \details{The percentage of variance is calculated using the corelation matrix
-of te constructs submitted to \code{\link{princomp}}.
+of te constructs submitted to \code{\link{svd}}.
 TODO: Results have not yet been checked against other grid programs.}
 \value{Numeric.}
 \author{Mark Heckmann}
@@ -28,8 +28,8 @@ repertory test and basic theory. In B. A. Maher (Ed.),
 \emph{Progress in experimental personality research}
 (Vol. 2). New York: Academic Press.
 
-James, R. E. (1954). Identification in terms of personal 
-constructs (Unpublished doctoral thesis). Ohio State 
+James, R. E. (1954). \emph{Identification in terms of personal 
+constructs} (Unpublished doctoral thesis). Ohio State 
 University, Columbus, OH.}
 \arguments{\item{x}{\code{repgrid} object.}
 \item{digits}{Numeric. Number of digits to round to (default is 
