@@ -2,11 +2,11 @@
 #
 .onLoad <- function(lib, pkg){
     packageStartupMessage(
-            "----------------------------------------------------------",
-          "\nOpenRepGrid: Tools for the analysis of repertory grid data",
-          "\nVersion", utils::packageDescription("OpenRepGrid", field="Version"), 
+            "-----------------------------------------------",
+          "\nOpenRepGrid Version ", utils::packageDescription("OpenRepGrid", field="Version"), 
+          "\nTools for the analysis of repertory grid data.",
           "\nFor an introduction visit: www.openrepgrid.org.",
-          "\n----------------------------------------------------------", 
+          "\n-----------------------------------------------", 
           appendLF = TRUE)
 
     # invisible object in workspace to store parameters (TODO)
