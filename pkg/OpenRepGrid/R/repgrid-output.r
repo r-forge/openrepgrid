@@ -422,6 +422,9 @@ df_out <- function(df,                # data frame
 # org$show$showopt <- 1
 # org$show$verbose <- TRUE
 
+# method depends on the definition of the 'repgrid' object
+# hence has to come before this code in COLLATE tag in DESCRIPTION
+
 #' Show method for repgrid
 #'
 #' @param object a \code{repgrid} object
@@ -429,6 +432,7 @@ df_out <- function(df,                # data frame
 #' @aliases show,repgrid-method
 #' @usage \S4method{show}{repgrid}(object)
 #' @author            Mark Heckmann
+#' @include repgrid.r
 #'
 setMethod("show", "repgrid", function(object){
   verbose <- TRUE    # what parts to print TRUE prints all information about the grid

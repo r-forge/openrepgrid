@@ -8,13 +8,13 @@ LazyLoad: yes
 Author: Mark Heckmann
 Description: Tools to analyse repertory grid data
 Version: 0.1.3
-Date: 2011-05-23
+Date: 2011-05-27
 Depends: methods, grid, colorspace, plyr, abind, rgl,
     psych, XML, tcltk
 Collate: 'bertin.r' 'calc.r' 'data-openrepgrid.r'
     'dev-functions.r' 'export.r' 'gmMain.r' 'import.r'
-    'measures.r' 'openrepgrid.r' 'repgrid-basicops.r'
-    'repgrid-constructs.r' 'repgrid-elements.r'
-    'repgrid-output.r' 'repgrid-plots.r'
-    'repgrid-ratings.r' 'repgrid.r' 'rgl-3d.r'
+    'measures.r' 'openrepgrid.r' 'repgrid.r'
+    'repgrid-basicops.r' 'repgrid-constructs.r'
+    'repgrid-elements.r' 'repgrid-output.r'
+    'repgrid-plots.r' 'repgrid-ratings.r' 'rgl-3d.r'
     'utils-import.r' 'utils.r' 'zzz.R'

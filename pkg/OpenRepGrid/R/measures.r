@@ -464,10 +464,10 @@ distanceSlater <- function(x, trim=10, indexcol=FALSE, digits=2, output=1,
 #'                    \code{progress = TRUE} to monitor progress for 
 #'                    large samples.
 #' @param meantype    The type of mean to use for standardization.
-#'                    \code{meantype=1} will use the expected mean 
+#'                    \code{meantype=1} will use the empirical mean 
 #'                    (which is 1 and the default)
-#'                    \code{meantype=2} will use the mean from 
-#'                    the sample distribution.
+#'                    \code{meantype=2} will use the expected mean, 
+#'                    i. e. 1.  
 #' @param quant       The propabities of the quantiles from the 
 #'                    Slater distance distribution that will be returned.
 #'                    The default is \code{c(.05, .5, .95)}. This corresponds
@@ -536,7 +536,7 @@ distanceSlater <- function(x, trim=10, indexcol=FALSE, digits=2, output=1,
 #'
 #' }
 #'
-distanceHartmann <- function(x, rep=100, meantype=1, quant=c(.05, .5, .95), 
+distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95), 
                               significant=FALSE, trim=10, indexcol=FALSE, 
                               digits=2, output=1, progress=TRUE, upper=TRUE){
   if (!inherits(x, "repgrid")) 

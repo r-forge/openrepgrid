@@ -1,6 +1,9 @@
-OpenRepGrid 0.1.3 (2011-05-23) ----------------------------------------
+OpenRepGrid 0.1.3 (2011-05-27) ----------------------------------------
 * permuteConstructs (dev)
 * update openrepgrid-internal
+* permuteGrid (dev)
+* update zzz
+* correct COLLATION order
 
 OpenRepGrid 0.1.2 (2011-05-21) ----------------------------------------
 * polishing of console output for several functions:
@@ -11,7 +14,6 @@ OpenRepGrid 0.1.2 (2011-05-21) ----------------------------------------
 * distance
 * alignByLoadings
 * some others might have been changed (undocumented)
-
 
 OpenRepGrid 0.1.1 (2011-05-15) ----------------------------------------
 

@@ -17,6 +17,7 @@
 #' @docType methods
 #' @author Mark heckmann
 #' @rdname extract-methods
+#' @include repgrid.r
 #' 
 #' @examples \dontrun{
 #'  
@@ -64,12 +65,14 @@ setMethod("[", signature(x = "repgrid", i = "ANY", j="ANY"),
 
 
 # overloading primitive generic "[<-" setter. 
+#
 #' Method for "<-" assignment of the repgrid ratings. 
 #' It should be possible to use it for ratings on all layers.
 #'
 #' @aliases [<-,repgrid-method
 #' @author  Mark Heckmann
 #' @rdname subassign
+#' @include repgrid.r
 #'
 #' @examples \dontrun{
 #'  
