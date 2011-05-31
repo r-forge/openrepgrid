@@ -312,3 +312,86 @@ errbar <- function (x, y, yplus, yminus, cap = 0.015, main = NULL, sub = NULL,
 # {
 #     (exp(2 * z) - 1)/(1 + exp(2 * z))
 # }
+
+
+
+
+##############################################################
+## Optimal Box-Cox transformation according to
+## a grid-based maximization of the correlation
+## of a Normal P-P plot.
+##############################################################
+## Author: Ioannis Kosmidis
+## Email: <I.Kosmidis at warwick dot ac dot uk>
+## Latest release: 02/08/2008
+## Distributed under GPL 2 or greater:
+## Available at http://www.gnu.org/licenses
+##############################################################
+## "normal.ppplot"
+## ----------------
+## Arguments:
+## x: a vector of the observed values
+## plot: values TRUE/FALSE depending on whether the Normal P-P
+##       plot is to be shown or if only the correlation
+##       coefficient of the plot should be returned
+## Value:
+## Either a Normal P-P plot or the correlation of the Normal
+## P-P plot, depending on the values of the plot argument.
+##############################################################
+## "optimal.boxcox"
+## ----------------
+## Arguments:
+## x: a vector of the observed values
+## lambda: the grid of lambda values that should be considered
+##         for the grid maximization
+## Value:
+## A plot showing the Normal P-P plot correlations for the
+## grid of values of lambda considered and the Normal P-P plot 
+## for the value of lambda which resulted in higher
+## correlation.
+## The vector of the transformed observations is also
+## returned.
+##############################################################
+                         
+normal.ppplot <- function(x, plot=FALSE) {
+  standardized.x <- (x - mean(x))/sd(x)
+  obs.probs <- pnorm(sort(standardized.x))
+  theor.probs <- ppoints(length(x))
+  corrs.pp <- cor(obs.probs, theor.probs)
+  if (plot) {
+    plot(obs.probs, theor.probs,
+         xlab = "Probabilities based on the standardized observed vector",
+         ylab = "Theoretical probabilities")
+    title(main = expression("Normal distribution P-P Plot"),
+          sub = paste("Normal P-P plot correlation coefficient:",
+            round(corrs.pp, 3)))
+    abline(0, 1)    
+  }
+  else corrs.pp
+}
+
+optimal.boxcox <- function(x, lambda = seq(-2, 2, len=200), plot=FALSE) {
+  ll <- length(lambda)
+  correlations.pp <- numeric(ll)
+  for (j in 1:ll) {
+    if (lambda[j]==0) temp <- log(x)
+    else temp <- (x^lambda[j]-1)/lambda[j]
+    correlations.pp[j] <- normal.ppplot(temp, plot = FALSE)
+  }
+  m.ind <- which.max(correlations.pp)
+  lambda.max <- lambda[m.ind]
+  if (plot){
+    par(mfrow = c(1,2))
+    plot(lambda, correlations.pp, type='l',
+         ylim=c(min(correlations.pp), 1.1),
+         xlab = expression(lambda),
+         ylab = "Normal P-P plot correlation coefficient")
+    points(lambda.max, correlations.pp[m.ind], pch="+")
+    text(lambda.max, correlations.pp[m.ind] + 0.05,
+         bquote(lambda == .(lambda.max)))
+    title(expression(paste(lambda, " versus P-P plot correlations")))
+  }
+  power.transformed <- (x^lambda.max - 1)/lambda.max
+  normal.ppplot(power.transformed, plot = plot)
+  list(x=power.transformed, lambda=lambda.max)
+}

@@ -1047,12 +1047,13 @@ convertScivescoImportObjectToRepGridObject <- function(import){
     # transform into by-row input for makeRepgrid
 #browser()
     args <- list(
-        name = unlist(element.names),                     # elements
-        l.name = unlist(import$emergentPoles),            # left poles
-        r.name = unlist(import$contrastPoles),            # right poles
-        scores =  as.vector(ratings))                     # ratings ... or t(ratings) ???
-    x <- makeRepgrid(args)                                # make repgrid
-    x <- setScale(x, 0, 1*10)    # set scale range
+        name = unlist(element.names),             # elements
+        l.name = unlist(import$emergentPoles),    # left poles
+        r.name = unlist(import$contrastPoles),    # right poles
+        scores =  as.vector(t(ratings)))          # ratings ... or t(ratings) ??? 
+                                                  # When sourced t is wrong, when build t is needed WTF???
+    x <- makeRepgrid(args)                        # make repgrid
+    x <- setScale(x, 0, 1*10)                     # set scale range
     x
   }
   x
@@ -1092,8 +1093,8 @@ convertScivescoImportObjectToRepGridObject <- function(import){
 #'                This might cause wrong assignments.
 #'
 #' @export
-#' @author    Mark Heckmann
-#'
+#' @author        Mark Heckmann
+#' 
 #' @references    \url{http://www.elementsandconstructs.de/}
 #'
 #'                Menzel, F., Rosenberger, M., Buve, J. (2007). Emotionale, intuitive und 

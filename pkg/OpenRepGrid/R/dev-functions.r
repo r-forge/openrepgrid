@@ -16,6 +16,8 @@
 #' @param nwc       Number of random words per construct.
 #' @param nwe       Number of random words per element.
 #' @param range     Minimal and maximal scale value (default \code{c(1, 5)}).
+#' @param prob      The probability of each rating value to occur. 
+#'                  If \code{NULL} (default) the distribution is uniform.
 #' @param options   Use random sentences as constructs and elements (1) or 
 #'                  not (0). If not, the elements and constructs are given 
 #'                  default names and are numbered.
@@ -34,7 +36,7 @@
 #'      x
 #' }
 #'
-randomGrid <- function(nc=10, ne=15, nwc=8, nwe=5, range=c(1,5), options=1){
+randomGrid <- function(nc=10, ne=15, nwc=8, nwe=5, range=c(1,5), prob=NULL, options=1){
   if (options == 1){          # full constructs and element names
     elem <- randomSentences(ne, nwe)
     left <- randomSentences(nc, nwc)
@@ -44,7 +46,7 @@ randomGrid <- function(nc=10, ne=15, nwc=8, nwe=5, range=c(1,5), options=1){
     left <- paste("lconstruct", seq_len(nc), sep="")
     right <- paste("rconstruct", seq_len(nc), sep="")
   }
-  scores <- sample(range[1]:range[2], nc*ne, rep=TRUE) 
+  scores <- sample(range[1]:range[2], nc*ne, rep=TRUE, prob=prob) 
   args <- list( name=elem,
   		  	      l.name=left,
   		  	      r.name=right,
@@ -65,6 +67,8 @@ randomGrid <- function(nc=10, ne=15, nwc=8, nwe=5, range=c(1,5), options=1){
 #' @param nwc       Number of random words per construct.
 #' @param nwe       Number of random words per element.
 #' @param range     Minimal and maximal scale value (default \code{c(1, 5)}).
+#' @param prob      The probability of each rating value to occur. 
+#'                  If \code{NULL} (default) the distribution is uniform.
 #' @param options   Use random sentences as constructs and elements (1) or 
 #'                  not (0). If not, the elements and constructs are given 
 #'                  default names and are numbered.
@@ -84,11 +88,11 @@ randomGrid <- function(nc=10, ne=15, nwc=8, nwe=5, range=c(1,5), options=1){
 #' }
 #'
 randomGrids <- function(rep=3, nc=10, ne=15, nwc=8, nwe=5, 
-                        range=c(1,5), options=1){
-    quasis <- replicate(rep, randomGrid(nc=nc, ne=ne, 
-                        nwc=nwc, nwe=nwe, 
-                        range=range, options=options))
-    quasis
+                        range=c(1,5), prob=NULL, options=1){
+    replicate(rep, randomGrid(nc=nc, ne=ne, 
+              nwc=nwc, nwe=nwe, 
+              range=range, prob=prob, 
+              options=options))
 }
 
 
@@ -101,6 +105,8 @@ randomGrids <- function(rep=3, nc=10, ne=15, nwc=8, nwe=5,
 #' @param nc        Number of constructs (default 10).
 #' @param ne        Number of elements (default 15).
 #' @param range     Minimal and maximal scale value (default \code{c(1, 5)}).
+#' @param prob      The probability of each rating value to occur. 
+#'                  If \code{NULL} (default) the distribution is uniform.
 #' @param progress  Whether to show a progress bar.
 #'  
 #' @return          A vector containing Slater distance values.
@@ -121,8 +127,8 @@ randomGrids <- function(rep=3, nc=10, ne=15, nwc=8, nwe=5,
 #'  
 #' }
 #'
-quasiDistributionDistanceSlater <- function(rep, nc, ne, range, progress=TRUE){
-  quasis <- randomGrids(rep, nc=nc, ne=ne, range=range, options=0)
+quasiDistributionDistanceSlater <- function(rep, nc, ne, range, prob=NULL, progress=TRUE){
+  quasis <- randomGrids(rep, nc=nc, ne=ne, range=range, prob=prob, options=0)
   if (progress)                 # whether to show progress bar
     lapply_fun <- lapply_pb else
     lapply_fun <- lapply

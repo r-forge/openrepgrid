@@ -7,8 +7,8 @@ Type: Package
 LazyLoad: yes
 Author: Mark Heckmann
 Description: Tools to analyse repertory grid data
-Version: 0.1.3
-Date: 2011-05-27
+Version: 0.1.4
+Date: 2011-05-28
 Depends: methods, grid, colorspace, plyr, abind, rgl,
     psych, XML, tcltk
 Collate: 'bertin.r' 'calc.r' 'data-openrepgrid.r'

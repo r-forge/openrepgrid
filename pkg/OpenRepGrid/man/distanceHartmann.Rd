@@ -2,8 +2,8 @@
 \alias{distanceHartmann}
 \title{'Hartmann distance' (standardized Euclidean distances).}
 \usage{distanceHartmann(x, rep=100, meantype=2, quant=c(0.05, 0.5, 0.95),
-    significant=FALSE, trim=10, indexcol=FALSE, digits=2,
-    output=1, progress=TRUE, upper=TRUE)
+    significant=FALSE, trim=10, indexcol=FALSE, prob,
+    digits=2, output=1, progress=TRUE, upper=TRUE)
 }
 \description{Hartmann (1992) showed in a Monte Carlo study that Slater distances
 (see \code{\link{distanceSlater}}) based on random grids, for 
@@ -79,6 +79,9 @@ column names are indexes instead of element names. This option
 renders a neater output as long element names will stretch 
 the output (default is \code{FALSE}). Note that the index column
 is the first matrix column.}
+\item{prob}{The probability of each rating value to occur. 
+If \code{NULL} (default) the distribution is uniform.
+The number of values must match the length of the rating scale.}
 \item{digits}{Numeric. Number of digits to round to (default is 
 \code{2}).}
 \item{output}{The output type. The default (\code{output=1}) will print

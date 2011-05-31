@@ -1,7 +1,7 @@
 \name{quasiDistributionDistanceSlater}
 \alias{quasiDistributionDistanceSlater}
 \title{Generate random grids and calculate 'Slater distances'...}
-\usage{quasiDistributionDistanceSlater(rep, nc, ne, range, progress=TRUE)
+\usage{quasiDistributionDistanceSlater(rep, nc, ne, range, prob, progress=TRUE)
 }
 \description{Generate random grids and calculate 'Slater distances'
 for the elements. All Slater distances
@@ -17,6 +17,8 @@ assess the distributions standard deviation.}
 \item{nc}{Number of constructs (default 10).}
 \item{ne}{Number of elements (default 15).}
 \item{range}{Minimal and maximal scale value (default \code{c(1, 5)}).}
+\item{prob}{The probability of each rating value to occur. 
+If \code{NULL} (default) the distribution is uniform.}
 \item{progress}{Whether to show a progress bar.}
 }
 \examples{\dontrun{

@@ -10,11 +10,11 @@
 #' @author    Currently the \pkg{OpenRepGrid} development team is Mark Heckmann. 
 #'            Everyone who is interested in developing the package is invited to join.
 #'
-#'            The \pkg{OpenRepGrid} package is developed at R-Forge (\url{http://openrepgrid.r-forge.r-project.org}).
+#'            The \pkg{OpenRepGrid} package is developed at R-Forge (\url{http://r-forge.r-project.org/projects/openrepgrid/}).
 #'            The R-Forge site provides information and mailing lists for help queries and bug reports. 
-#'            Bug reports can also be emailed to the package maintainer or issued under 
-#'            \url{http://www.openrepgrid.org}. The maintainer at R-Forge is Mark Heckmann 
-#'            <heckmann(at)uni-bremen.de>.
+#'            Bug reports can also be emailed to the package maintainer or issued on 
+#'            \url{http://www.openrepgrid.org} under section \emph{Suggestions/issues}.
+#'            The package maintainer at R-Forge is Mark Heckmann  <heckmann(at)uni-bremen.de>.
 #'
 #' @note      To get started with \pkg{OpenRepGrid} visit the project's home under \url{www.openrepgrid.org}. 
 #'            On this site you will find tutorials, explanation about the theory, methods of analysis and 
@@ -22,6 +22,11 @@
 #'
 #'            To see the preferable citation of the \pkg{OpenRepGrid} package, type 
 #'            \code{citation("OpenRepGrid")} into the R console.
+#'
+#'            Disclaimer: Note that the package is distributed under the GPL 2 license.
+#'            It is work in progress and is continuously being improved by hopefully 
+#'            numerous contributors. It may contain bugs and errors.
+#'            There is no warranty whatsoever for the program.
 #'
 #' @references  Fransella, F., Bell, R. C., & Bannister, D. (2003). \emph{A Manual for Repertory 
 #'                  Grid Technique (2. Ed.)}. Chichester: John Wiley & Sons.

@@ -487,6 +487,9 @@ distanceSlater <- function(x, trim=10, indexcol=FALSE, digits=2, output=1,
 #'                    renders a neater output as long element names will stretch 
 #'                    the output (default is \code{FALSE}). Note that the index column
 #'                    is the first matrix column.
+#' @param prob        The probability of each rating value to occur. 
+#'                    If \code{NULL} (default) the distribution is uniform.
+#'                    The number of values must match the length of the rating scale.
 #' @param digits      Numeric. Number of digits to round to (default is 
 #'                    \code{2}).
 #' @param output      The output type. The default (\code{output=1}) will print
@@ -537,7 +540,8 @@ distanceSlater <- function(x, trim=10, indexcol=FALSE, digits=2, output=1,
 #' }
 #'
 distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95), 
-                              significant=FALSE, trim=10, indexcol=FALSE, 
+                              significant=FALSE, trim=10, indexcol=FALSE,
+                              prob=NULL,  
                               digits=2, output=1, progress=TRUE, upper=TRUE){
   if (!inherits(x, "repgrid")) 
 		stop("Object must be of class 'repgrid'")
@@ -548,6 +552,7 @@ distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95),
   ne <- getNoOfElements(x)
   sl.vals <- quasiDistributionDistanceSlater(rep=rep, nc=nc, 
                                           ne=ne, range=getScale(x),
+                                          prob=prob,                                      
                                           progress=progress)
                                           
   # linear tranformation to derive Hartmann distance (1992, p. 49)
@@ -644,6 +649,210 @@ distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95),
               sl.vals=round(sl.vals, digits), sl.sd=sd.c)
   invisible(res)  
 }
+
+
+
+### Power transformed Hartmann distance ###
+#
+#' TODO: Hartmann (1992) showed in a Monte Carlo study that Slater distances
+#' (see \code{\link{distanceSlater}}) based on random grids, for 
+#' which Slater coined the expression quasis, have a skewed distribution,
+#' a mean and a standard deviation depending on the number 
+#' of constructs elicited. He suggested a linear transformation (z-transformation) 
+#' which takes into account the estimated (or expected) mean and 
+#' the standard deviation  of the derived distribution to standardize Slater distance scores 
+#' across different grid sizes. 
+#' As Hartmann uses a linear form of normalization, the skewness of tzhe distribution is not affected.
+#' The function \code{distanceNormalize}
+#' conducts a small Monte Carlo simulation for the supplied grid.
+#' I. e. a number of quasis of the same size and with the same scale range
+#' as the grid under investigation are generated. A distrubution of
+#' Slater distances derived from the quasis is calculated and used for
+#' Hartmann's standardization.    \cr  \cr
+#' It is also possible to return the quantiles of the sample distribution
+#' and only the element distances consideres 'significant'
+#' according to the quantiles defined.
+#'
+#'
+#' The 'Power tranformed Hartmann distance' are calulated as follows:
+#' The simulated Hartmann distribution is added a constant as the power transformation used
+#' can only be applied to positive values. Then a range of values for 
+#' lambda in the Box-Cox transformation (Box & Cox, 1964) are tried out. The best lambda
+#' is the one maximizing the correlation of quantiles with pwoer transformed 
+#' and the normal distribution.
+#' The lambda value maximizing normality is used to transform Hartmann values. As
+#' The power transformed values have a different scale they are 
+#' z-transformed afterwards to match the standard normal distribution. The last step is the same
+#' as in Hartmann (1992) case. Only the the power transformation leading to a
+#' reduced deviation of the distribution from the normal distribution
+#' is added. 
+#'
+#' The code for the calculation of the optimal lambda was written by Ioannis Kosmidis.
+#'
+#' @title             'Power transformed Hartmann distance' (standardized Euclidean distances).
+#'
+#' @param x           \code{repgrid} object.
+#' @param rep         Number of random grids to generate to produce
+#'                    sample distribution for Hartmann distances
+#'                    (default is \code{100}). Note that
+#'                    a lot of samples may take a while to calculate. Set 
+#'                    \code{progress = TRUE} to monitor progress for 
+#'                    large samples.
+#' @param quant       The propabities of the quantiles from the 
+#'                    power transformed Hartmann distance distribution that will be returned.
+#'                    The default is \code{c(.05, .5, .95)}. This corresponds
+#'                    to the lower 5 \%, the mean and the upper 5 \% of the
+#'                    distribution.
+#' @param significant Whether to only show values that are outside the quantiles
+#'                    defined in \code{quant}, i.e. onsidered as 'significant'
+#'                    (default is \code{FALSE}.)
+#'                    The first and last value of \code{quant} is used
+#'                    to determine the indifference region. This options only applies
+#'                    when \code{output == 1} is used.
+#' @param trim        The number of characters a element names are trimmed to (default is
+#'                    \code{10}). If \code{NA} no trimming is done. Trimming
+#'                    simply saves space when displaying the output.
+#' @param indexcol    Logical. Whether to add an extra index column so the 
+#'                    column names are indexes instead of element names. This option 
+#'                    renders a neater output as long element names will stretch 
+#'                    the output (default is \code{FALSE}). Note that the index column
+#'                    is the first matrix column.
+#' @param prob        The probability of each rating value to occur. 
+#'                    If \code{NULL} (default) the distribution is uniform.
+#'                    The number of values must match the length of the rating scale.
+#' @param digits      Numeric. Number of digits to round to (default is 
+#'                    \code{2}).
+#' @param output      The output type. The default (\code{output=1}) will print
+#'                    the power transformed Hartmann distances to the console.
+#'                    \code{output=0} will suppress the printing to the console.
+#'                    In all cases a list containig the results of the calculations
+#'                    is returned invisibly. See value for details.
+#' @param progress    Whether to show a progress bar (default is \code{TRUE}).
+#'                    May be useful when the distribution is estimated on the basis
+#'                    of many quasis.
+#' @param upper       Logical. Whether to display only upper part of the distance matrix
+#'                    (default \code{TRUE}).
+#'
+#' @return            A matrix containing Hartmann distances (\code{output=1}
+#'                    and \code{output=2}) 
+#'                    or a list (\code{output=3}) containing: \cr
+#'                    \item{hartmann}{matrix of Hartmann distances}
+#'                    \item{h.quantiles}{quantiles for Hartmann distances}
+#'                    \item{h.vals}{random values of Hartmann}
+#'                    \item{h.sd}{standard deviation of distribution of Hartmann values}
+#'                    \item{slater}{matrix of Slater distances}
+#'                    \item{sl.quantiles}{quantiles for Slater distances}
+#'                    \item{sl.vals}{vector of all Slater distances}
+#'                    \item{ls.sd}{standard deviation of random Slater distances}
+#'                    \item{normalized}{matrix of power transformed Hartmann distances}
+#'                    \item{n.quantiles}{quantiles for power transformed Hartmann distances}
+#'                    \item{n.vals}{vector of all power transformed Hartmann distances}
+#'                    \item{n.sd}{standard deviation of random power transformed Hartmann distances}
+#'          
+#' @references        Box, G. E. P., & Cox, D. R. (1964). An Analysis of Transformations. 
+#'                    \emph{Journal of the Royal Statistical Society. Series B (Methodological), 26}(2), 211-252.
+#'
+#'                    Hartmann, A. (1992). Element comparisons in repertory 
+#'                    grid technique: Results and consequences of a Monte 
+#'                    Carlo study. \emph{International Journal of Personal 
+#'                    Construct Psychology, 5}(1), 41-56.
+#'
+#' @export
+#' @author            Mark Heckmann
+#' @seealso           \code{\link{distanceHartmann}} and \code{\link{distanceSlater}}.
+#' @examples \dontrun{
+#'
+#'    distanceNormalized(bell2010)
+#'    distanceNormalized(bell2010, trim=40, index=T, sig=T)
+#'
+#'    ### histogram of power transformed Hartmann distances indifference region
+#'    d <- distanceNormalized(bell2010, out=0)
+#'    hist(d$n.vals, breaks=100)
+#'    abline(v=d$n.quant, col="red")
+#'
+#'    ### histogram of Hartmann distances and indifference region
+#'    hist(d$h.vals, breaks=100)
+#'    abline(v=d$h.quant, col="red")
+#'
+#' }
+#'
+distanceNormalized <- function(x, rep=100, quant=c(.05, .5, .95), 
+                                significant=FALSE, trim=10, indexcol=FALSE,
+                                prob=NULL,  digits=2, output=1, progress=TRUE, upper=TRUE){
+  if (!inherits(x, "repgrid")) 
+		stop("Object must be of class 'repgrid'")
+
+  # calculate Hartmann and Slater distances
+  h <- distanceHartmann(x, rep=rep, digits=10, quant=quant, out=0)
+  
+  # optimal lambda for Box-Cox transformation. Add constant as only defined for positive values
+  constant <- abs(min(c(h$h.vals, h$hartmann))) + 0.00001
+  bc <- optimal.boxcox(h$h.vals + constant)  
+  
+  # parameters to standardize power transformed Hartmann values
+  lambda.max <- bc$lambda
+  sd.bc <- sd(bc$x)
+  mean.bc <- mean(bc$x)
+
+	# function to perform Box-Cox tranformation plus standardization
+  bc.tranform <- function(x){ # , constant, lambda.max, sd.bc, mean.bc){
+    res <- ((x + constant)^lambda.max - 1) / lambda.max   # power transformation
+    (res-mean.bc) / (sd.bc)           # z-transformation
+  }
+  
+  # make ransformations for all Hartmann data
+  N <-  bc.tranform(h$hartmann)
+  n.vals <- bc.tranform(h$h.vals)
+  n.qs <- quantile(n.vals, quant, na.rm=T)
+  n.sd <- sd(n.vals, na.rm=T)
+  norm <- list(normalized=N, n.quantiles=n.qs,
+              n.vals=n.vals, n.sd=n.sd)
+  res <- lapply(c(h, norm), round, digits)    # list with all results to be returned
+  
+  
+  ### Different output modes ###
+  # Prepare output: add names
+  N.mat <- round(N, digits)
+  N.mat <- addNamesToMatrix(x = x, m = N.mat, trim = trim, along = 2)
+
+  # format output            
+   blanks <- paste(rep(" ", digits + 2), collapse="")
+   if (significant){
+     N.mat[N.mat > head(n.qs, 1 ) & N.mat < tail(n.qs, 1)] <- blanks
+     diag(N.mat) <- blanks
+   } 
+
+   if (upper) {
+     N.mat[lower.tri(N.mat, diag=T)] <- blanks
+   }
+
+   if (indexcol) {
+     N.mat <- addIndexColumnToMatrix(N.mat) 
+   } else {
+     N.mat.rownames <- rownames(N.mat)
+     rownames(N.mat) <-  paste(seq_along(N.mat.rownames), N.mat.rownames)    
+     colnames(N.mat) <-  seq_len(ncol(N.mat))
+   }     
+   N.show <- as.data.frame(N.mat)
+  
+  
+  # output to console
+  normalizedOut <- function(...){
+    cat("\n####################################")  
+    cat("\nPower transformed Hartmann distances")
+    cat("\n####################################\n\n")
+    print(N.show)
+    cat("\nThe 'Power transformed Hartmann distance' sample distribution has the following quantiles:\n")
+    print(round(n.qs, digits))
+    cat("\nStandard deviation:", round(n.sd, 2))   
+  }
+  
+  if (output == 1){           # Normalized only
+    normalizedOut() 
+  } 
+  invisible(res)
+}
+
 
 
 ###############################################################################
