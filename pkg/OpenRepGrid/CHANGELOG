@@ -2,7 +2,8 @@ See NEWS for changes in latest version
 
 OpenRepGrid 0.1.5 (2011-06-07) ----------------------------------------
 * package description updated
-* prob argumnet in distanceXXX functions
+* prob argument in distanceXXX functions
+* bug in makeRepgrid corrected: ratings now read by row
 
 OpenRepGrid 0.1.4 (2011-05-31) ----------------------------------------
 * demo added
@@ -16,7 +17,7 @@ OpenRepGrid 0.1.3 (2011-05-27) ----------------------------------------
 * update openrepgrid-internal
 * permuteGrid (dev)
 * update zzz
-* correct COLLATION order
+* corrected COLLATION order
 
 OpenRepGrid 0.1.2 (2011-05-21) ----------------------------------------
 * polishing of console output for several functions:

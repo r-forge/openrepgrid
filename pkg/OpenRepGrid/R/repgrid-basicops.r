@@ -111,8 +111,13 @@ setMethod("[<-", signature(x = "repgrid", i = "ANY", j="ANY", value="ANY"),
     if (any(j > length(x@elements)) | any(j == 0))              # check if all indexes do not exceed numer of elements or constructs
       stop("index for elements is out of range. Index must not",
             " exceed the number of elements or equal zero.")
-    x@ratings[i, j, layer] <- value                               # to fill by rows
+    x@ratings[i, j, layer] <- value                               
+    # to fill by rows
       #as.vector(matrix(as.vector(value), ncol=length(x@elements), byrow=TRUE))
+    # another idea to fill by rows by transposing the part of importance
+      # f <- t(d[1:3, 1:2])
+      # f[,] <- 1:6
+      # d[1:3, 1:2] <- t(f)
     x 
 })
 
@@ -930,8 +935,8 @@ makeRepgrid <- function(args){
   x <- do.call(c.setConstructs, l)
   x <- initRatingArray(x)								# initialize rating array
   l <- c(list(x=x), args)								# make a new repgrid object	
-  #x[ ,] <- args$scores
-  x <- do.call(r.setRatings, l)
+  x[ , ] <- matrix(args$scores, ncol=getNoOfElements(x), by=T)  # to fill matrix rowwise
+  #x <- do.call(r.setRatings, l)        # old version
   l <- c(list(x=x), args)								# make a new repgrid object	
   x <- do.call(rg.setCoupled, l)        # if no coupled argument then coupled=TRUE
   l <- c(list(x=x), args)								# make a new repgrid object	

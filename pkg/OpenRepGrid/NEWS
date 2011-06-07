@@ -1,8 +1,13 @@
-OpenRepGrid 0.1.4 (2011-05-28) ----------------------------------------
+OpenRepGrid 0.1.5 (2011-06-07) ----------------------------------------
+* package description updated
+* prob argumnet in distanceXXX functions
+
+OpenRepGrid 0.1.4 (2011-05-31) ----------------------------------------
 * demo added
 * bug corrected in importScivesco
 * changed package description
-* prob parameter added in randomGrid(s) (dev)
+* prob parameter: randomGrid(s), quasiDistributionDistanceSlater (dev)
+* distanceNormalized
 
 OpenRepGrid 0.1.3 (2011-05-27) ----------------------------------------
 * permuteConstructs (dev)

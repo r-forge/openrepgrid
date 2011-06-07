@@ -49,7 +49,7 @@ convertImportObjectToRepGridObject <- function(import){
       name = unlist(import$elements),                   # elements
       l.name = unlist(import$emergentPoles),            # left poles
       r.name = unlist(import$contrastPoles),            # right poles
-      scores = t(sapply(import$ratings, I)) )           # ratings
+      scores = sapply(import$ratings, I))               # ratings
   x <- makeRepgrid(args)                                # make repgrid
   x <- setScale(x, import$minValue, import$maxValue)    # set scale range
   x    
@@ -1050,7 +1050,7 @@ convertScivescoImportObjectToRepGridObject <- function(import){
         name = unlist(element.names),             # elements
         l.name = unlist(import$emergentPoles),    # left poles
         r.name = unlist(import$contrastPoles),    # right poles
-        scores =  as.vector(t(ratings)))          # ratings ... or t(ratings) ??? 
+        scores =  as.vector(t(ratings)))             # ratings ... or t(ratings) ??? 
                                                   # When sourced t is wrong, when build t is needed WTF???
     x <- makeRepgrid(args)                        # make repgrid
     x <- setScale(x, 0, 1*10)                     # set scale range
@@ -1263,7 +1263,7 @@ importTxtInternal <- function(file, dir=NULL, min=NULL, max=NULL){
   l$emergentPoles <- lapply(tmp, function(x) trimBlanksInString(x[1]) )
   l$contrastPoles <- lapply(tmp, function(x) trimBlanksInString(x[2]) ) 		
  	
- 	# read ratings and connvert to numeric
+ 	# read ratings and convert to numeric
  	op <- options()$warn
  	options(warn=-1)
   l$ratings <- as.list(data[(line.ratings + 1):(line.ratings.end-1)])
@@ -1272,6 +1272,7 @@ importTxtInternal <- function(file, dir=NULL, min=NULL, max=NULL){
     as.numeric(tmp)
   })
  	options(warn=op)
+ 
  
   # read range if available
   if (!identical(line.range, integer(0))){
