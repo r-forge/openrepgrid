@@ -13,7 +13,7 @@
 #'            The \pkg{OpenRepGrid} package is developed at R-Forge (\url{http://r-forge.r-project.org/projects/openrepgrid/}).
 #'            The R-Forge site provides information and mailing lists for help queries and bug reports. 
 #'            Bug reports can also be emailed to the package maintainer or issued on 
-#'            \url{http://www.openrepgrid.org} under section \emph{Suggestions/issues}.
+#'            \url{http://www.openrepgrid.org} under section \emph{Suggestions/Issues}.
 #'            The package maintainer at R-Forge is Mark Heckmann  <heckmann(at)uni-bremen.de>.
 #'
 #' @note      To get started with \pkg{OpenRepGrid} visit the project's home under \url{www.openrepgrid.org}. 
@@ -23,7 +23,8 @@
 #'            To see the preferable citation of the \pkg{OpenRepGrid} package, type 
 #'            \code{citation("OpenRepGrid")} into the R console.
 #'
-#'            Disclaimer: Note that the package is distributed under the GPL 2 license.
+#'            Disclaimer: Note that the package is distributed under the 
+#'            \href{http://www.gnu.org/licenses/gpl-2.0.html}{GPL 2 license}.
 #'            It is work in progress and is continuously being improved by hopefully 
 #'            numerous contributors. It may contain bugs and errors.
 #'            There is no warranty whatsoever for the program.
