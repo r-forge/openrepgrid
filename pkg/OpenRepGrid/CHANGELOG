@@ -1,6 +1,10 @@
 See NEWS for changes in latest version
 
-OpenRepGrid 0.1.4 (2011-05-29) ----------------------------------------
+OpenRepGrid 0.1.5 (2011-06-07) ----------------------------------------
+* package description updated
+* prob argumnet in distanceXXX functions
+
+OpenRepGrid 0.1.4 (2011-05-31) ----------------------------------------
 * demo added
 * bug corrected in importScivesco
 * changed package description
