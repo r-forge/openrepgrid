@@ -654,42 +654,35 @@ distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95),
 
 ### Power transformed Hartmann distance ###
 #
-#' TODO: Hartmann (1992) showed in a Monte Carlo study that Slater distances
-#' (see \code{\link{distanceSlater}}) based on random grids, for 
-#' which Slater coined the expression quasis, have a skewed distribution,
-#' a mean and a standard deviation depending on the number 
-#' of constructs elicited. He suggested a linear transformation (z-transformation) 
-#' which takes into account the estimated (or expected) mean and 
-#' the standard deviation  of the derived distribution to standardize Slater distance scores 
-#' across different grid sizes. 
-#' As Hartmann uses a linear form of normalization, the skewness of tzhe distribution is not affected.
-#' The function \code{distanceNormalize}
-#' conducts a small Monte Carlo simulation for the supplied grid.
-#' I. e. a number of quasis of the same size and with the same scale range
-#' as the grid under investigation are generated. A distrubution of
-#' Slater distances derived from the quasis is calculated and used for
-#' Hartmann's standardization.    \cr  \cr
-#' It is also possible to return the quantiles of the sample distribution
+#' Hartmann (1992) suggested a transformation of Slater (1977) distances 
+#' to make them independent from the size of a grid. Hartmann distances are supposed
+#' to yield stable cutoff values used to determine 'significance' of inter-element
+#' distances. It can be shown that Hartmann distances are still affected by 
+#' grid parameters like size and the range of the rating scale used.
+#' The function \code{distanceNormalize} applies a Box-Cox (1964) transformation
+#' to the Hartmann distances in order to remove the skew of the Hartmann 
+#' distance distribution. The normalized values show to have more stable 
+#' cutoffs (quantiles) and better properties for comparison across grids 
+#' of different size and scale range.    \cr  \cr
+#' The function \code{distanceNormalize} will return Slater, Hartmann or 
+#' power transfpormed Hartmann distances
+#' if prompted. It is also possible to return the quantiles of the sample distribution
 #' and only the element distances consideres 'significant'
 #' according to the quantiles defined.
 #'
-#'
-#' The 'Power tranformed Hartmann distance' are calulated as follows:
-#' The simulated Hartmann distribution is added a constant as the power transformation used
-#' can only be applied to positive values. Then a range of values for 
-#' lambda in the Box-Cox transformation (Box & Cox, 1964) are tried out. The best lambda
-#' is the one maximizing the correlation of quantiles with pwoer transformed 
-#' and the normal distribution.
-#' The lambda value maximizing normality is used to transform Hartmann values. As
-#' The power transformed values have a different scale they are 
-#' z-transformed afterwards to match the standard normal distribution. The last step is the same
-#' as in Hartmann (1992) case. Only the the power transformation leading to a
-#' reduced deviation of the distribution from the normal distribution
-#' is added. 
+#' The 'power tranformed or normalized Hartmann distance' are calulated as follows:
+#' The simulated Hartmann distribution is added a constant as the Box-Cox 
+#' transformation can only be applied to positive values. 
+#' Then a range of values for lambda in the Box-Cox transformation 
+#' (Box & Cox, 1964) are tried out. The best lambda
+#' is the one maximizing the correlation of the quantiles with the standard 
+#' normal distribution. The lambda value maximizing normality is used 
+#' to transform Hartmann distances. As the resulting scale of the power transformation 
+#' depends on lambda, the resulting values are z-transformed to derive a common scaling.
 #'
 #' The code for the calculation of the optimal lambda was written by Ioannis Kosmidis.
 #'
-#' @title             'Power transformed Hartmann distance' (standardized Euclidean distances).
+#' @title             'normalized inter-element distances' (power transformed Hartmann distances).
 #'
 #' @param x           \code{repgrid} object.
 #' @param rep         Number of random grids to generate to produce
@@ -750,12 +743,17 @@ distanceHartmann <- function(x, rep=100, meantype=2, quant=c(.05, .5, .95),
 #'                    \item{n.sd}{standard deviation of random power transformed Hartmann distances}
 #'          
 #' @references        Box, G. E. P., & Cox, D. R. (1964). An Analysis of Transformations. 
-#'                    \emph{Journal of the Royal Statistical Society. Series B (Methodological), 26}(2), 211-252.
+#'                    \emph{Journal of the Royal Statistical Society. 
+#'                    Series B (Methodological), 26}(2), 211-252.
 #'
 #'                    Hartmann, A. (1992). Element comparisons in repertory 
 #'                    grid technique: Results and consequences of a Monte 
 #'                    Carlo study. \emph{International Journal of Personal 
 #'                    Construct Psychology, 5}(1), 41-56.
+#'
+#'                    Slater, P. (1977). \emph{The measurement of intrapersonal space 
+#'                    by Grid technique}. London: Wiley.
+#'
 #'
 #' @export
 #' @author            Mark Heckmann
@@ -783,7 +781,7 @@ distanceNormalized <- function(x, rep=100, quant=c(.05, .5, .95),
 		stop("Object must be of class 'repgrid'")
 
   # calculate Hartmann and Slater distances
-  h <- distanceHartmann(x, rep=rep, digits=10, quant=quant, out=0)
+  h <- distanceHartmann(x, rep=rep, digits=10, prob=prob, quant=quant, out=0)
   
   # optimal lambda for Box-Cox transformation. Add constant as only defined for positive values
   constant <- abs(min(c(h$h.vals, h$hartmann))) + 0.00001
