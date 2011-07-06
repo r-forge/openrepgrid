@@ -1,11 +1,10 @@
 \name{addElement}
 \alias{addElement}
-\title{Add an element to an existing grid...}
+\title{Add an element to an existing grid.}
 \usage{addElement(x, name=NA, scores=NA, abbreviation=NA, status=NA,
     position=NA, side="pre")
 }
-\description{Add an element to an existing grid}
-\details{Add an element to an existing grid.}
+\description{Add an element to an existing grid.}
 \value{\code{repgrid} object}
 \author{Mark Heckmann}
 \seealso{\code{\link{addConstruct}}}

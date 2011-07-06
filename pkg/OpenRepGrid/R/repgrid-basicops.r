@@ -442,8 +442,6 @@ clearRatings <- function(x, rows=NA, cols=NA, layer=1){
 #clearRatings(x, 1, 1)
 
 
-#' Add an element to an existing grid
-#'
 #' Add an element to an existing grid.
 #'
 #' @param x               \code{repgrid} object.
@@ -458,7 +456,7 @@ clearRatings <- function(x, rows=NA, cols=NA, layer=1){
 #' @return                \code{repgrid} object
 #' @export
 #' @author                Mark Heckmann
-#' @seealso             \code{\link{addConstruct}}
+#' @seealso               \code{\link{addConstruct}}
 #'
 #' @examples \dontrun{
 #'
@@ -491,13 +489,13 @@ addElement <- function(x, name=NA, scores=NA, abbreviation=NA, status=NA, positi
 #'
 #' @param x               \code{repgrid} object.
 #' @param l.name          Name of the left pole (character string).
-#' @param r.name          Name of the right pole (character string)
+#' @param r.name          Name of the right pole (character string).
 #' @param scores          Numerical ratings for the new construct row
 #'                        (length must match number of elements in the grid).
-#' @param l.preferred     Is the left one the preferred pole? (logical)
-#' @param r.preferred     Is the right one the preferred pole? (logical)
-#' @param l.emerged       Is the left one the emergent pole? (logical)
-#' @param r.emerged       Is the right one the emergent pole? (logical)
+#' @param l.preferred     Is the left one the preferred pole? (logical).
+#' @param r.preferred     Is the right one the preferred pole? (logical).
+#' @param l.emerged       Is the left one the emergent pole? (logical).
+#' @param r.emerged       Is the right one the emergent pole? (logical).
 #' @param position        An integer at which row the construct will be added.
 #'                        TODO. Does not work properly.
 #' @param side            Not yet in use.
@@ -1081,6 +1079,30 @@ getNoOfElements <- function(x){
   if (!inherits(x, "repgrid")) 	# check if x is repgrid object
 		stop("object x and y must be of class 'repgrid'")
 	length(x@elements)
+}
+
+
+#' Return size of a grid. \code{dim} returns a numeric vector of length
+#' two containing the number of constructs and elements.
+#'
+#' @param x     \code{repgrid} object.
+#' @return      Numeric vector of length two with the number of 
+#'              constructs and elements.
+#'
+#' @export
+#' @keywords    internal
+#' @author      Mark Heckmann
+#' @seealso     \code{\link{getNoOfConstructs}};   \code{\link{getNoOfElements}}
+#' @examples \dontrun{
+#'
+#'      dim(bell2010)
+#'
+#' }
+#'
+dim.repgrid <- function(x){
+  if (!inherits(x, "repgrid")) 	# check if x is repgrid object
+ 		stop("object x and y must be of class 'repgrid'")
+  c(constructs=getNoOfConstructs(x), elements=getNoOfElements(x))
 }
 
 
