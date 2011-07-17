@@ -781,7 +781,8 @@ distanceNormalized <- function(x, rep=100, quant=c(.05, .5, .95),
 		stop("Object must be of class 'repgrid'")
 
   # calculate Hartmann and Slater distances
-  h <- distanceHartmann(x, rep=rep, digits=10, prob=prob, quant=quant, out=0)
+  h <- distanceHartmann(x, rep=rep, digits=10, prob=prob, 
+                        progress=progress, quant=quant, out=0)
   
   # optimal lambda for Box-Cox transformation. Add constant as only defined for positive values
   constant <- abs(min(c(h$h.vals, h$hartmann))) + 0.00001
